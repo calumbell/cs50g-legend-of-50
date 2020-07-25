@@ -162,7 +162,16 @@ function Room:update(dt)
             if entity.health <= 0 then
                 entity.dead = true
                 if math.random(HEART_SPAWN_CHANCE) == 1 then
-                    table.insert(self.objects, GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y))
+                    local heart = GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y)
+                    table.insert(self.objects, heart)
+
+                    -- remember index of heart
+                    local index = #self.objects
+
+                    heart.onCollide = function()
+                        self.player.health = math.min(6, self.player.health + 2)
+                        table.remove(self.objects, index)
+                    end                
                 end
 
             -- if entity health is >0, update it
