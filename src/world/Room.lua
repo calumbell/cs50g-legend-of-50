@@ -155,17 +155,24 @@ function Room:update(dt)
     for i = #self.entities, 1, -1 do
         local entity = self.entities[i]
 
-        -- remove entity from the table if health is <= 0
-        if entity.health <= 0 then
-            entity.dead = true
-            table.insert(self.objects, GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y))
+        -- only update entity if it is alive
+        if not entity.dead then
 
-        elseif not entity.dead then
-            entity:processAI({room = self}, dt)
-            entity:update(dt)
+            -- if entity health is zero or less, it is dead. Maybe spawn a pickup?
+            if entity.health <= 0 then
+                entity.dead = true
+                if math.random(HEART_SPAWN_CHANCE) == 1 then
+                    table.insert(self.objects, GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y))
+                end
+
+            -- if entity health is >0, update it
+            else
+                entity:processAI({room = self}, dt)
+                entity:update(dt)
+            end
         end
 
-        -- collision between the player and entities in the room
+        -- calculate collision between the player and entities in the room
         if not entity.dead and self.player:collides(entity) and not self.player.invulnerable then
             gSounds['hit-player']:play()
             self.player:damage(1)
