@@ -22,6 +22,13 @@ TILE_SIZE = 16
 PLAYER_WALK_SPEED = 60
 
 --
+-- game object constants
+--
+
+-- reciprocal of this number is the probability
+HEART_SPAWN_CHANCE = 5
+
+--
 -- map constants
 --
 MAP_WIDTH = VIRTUAL_WIDTH / TILE_SIZE - 2
