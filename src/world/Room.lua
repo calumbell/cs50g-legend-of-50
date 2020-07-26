@@ -165,12 +165,12 @@ function Room:update(dt)
                     local heart = GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y)
                     table.insert(self.objects, heart)
 
-                    -- remember index of heart
-                    local index = #self.objects
 
                     heart.onCollide = function()
-                        self.player.health = math.min(6, self.player.health + 2)
-                        table.remove(self.objects, index)
+                        if heart.isActive then
+                            self.player.health = math.min(6, self.player.health + 2)
+                            heart.isActive = false
+                        end
                     end                
                 end
 
@@ -193,14 +193,29 @@ function Room:update(dt)
         end
     end
 
-    for k, object in pairs(self.objects) do
-        object:update(dt)
+    local keysToRemove = {}
 
-        -- trigger collision callback on object
-        if self.player:collides(object) then
-            object:onCollide()
+    for k, object in pairs(self.objects) do
+        -- if an object is active, run update and collision logic
+        if object.isActive then
+            object:update(dt)
+
+            -- trigger collision callback on object
+            if self.player:collides(object) then
+                object:onCollide()
+            end
+
+        -- if an object isn't active, flag it for removal
+        else
+            table.insert(keysToRemove, k)
         end
     end
+
+    -- remove keys that have been flagged for removal
+    for k = #keysToRemove, -1 do
+        table.remove(self.objects, k)
+    end
+
 end
 
 function Room:render()
