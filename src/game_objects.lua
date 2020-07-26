@@ -48,7 +48,7 @@ GAME_OBJECT_DEFS = {
         height = 16,
         solid = true,
         defaultState = 'onGround',
-        state = {
+        states = {
             ['onGround'] = {
                 frame = 14
             },
