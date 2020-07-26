@@ -108,12 +108,23 @@ function Room:generateObjects()
     end
     
     -- generate pots
+    -- iterate room rows, subtract one from either end of range to miss the walls
     for y = 2, self.width - 1 do
+
+        -- iterate room colms
         for x = 2, self.height - 1 do
             if math.random(POT_SPAWN_CHANCE) == 1 then
-                local newPot = GameObject(GAME_OBJECT_DEFS['pot'], y * TILE_SIZE, x * TILE_SIZE)
-                if not self.player:collides(newPot) then
-                    table.insert(self.objects, newPot)
+                local pot = GameObject(GAME_OBJECT_DEFS['pot'], y * TILE_SIZE, x * TILE_SIZE)
+
+                pot.onBreak = function ()
+                    gSounds['pot-break']:play()
+                    pot.breakable = false
+                    pot.solid = false
+                    pot.isActive = false
+                end
+
+                if not self.player:collides(pot) then
+                    table.insert(self.objects, pot)
                 end
             end
         end

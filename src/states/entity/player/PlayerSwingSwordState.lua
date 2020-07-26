@@ -64,6 +64,13 @@ function PlayerSwingSwordState:update(dt)
         end
     end
 
+    -- check if hitbox collides with any breakable objects in scene
+    for k, object in pairs(self.dungeon.currentRoom.objects) do
+        if object:collides(self.swordHitbox) and object.breakable then
+            object:onBreak()
+        end
+    end
+
     if self.player.currentAnimation.timesPlayed > 0 then
         self.player.currentAnimation.timesPlayed = 0
         self.player:changeState('idle')

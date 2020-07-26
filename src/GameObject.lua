@@ -18,6 +18,9 @@ function GameObject:init(def, x, y)
     -- whether it acts as an obstacle or not
     self.solid = def.solid
 
+    -- whether it can be broken by attacking it
+    self.breakable = def.breakable
+
     self.defaultState = def.defaultState
     self.state = self.defaultState
     self.states = def.states
@@ -32,6 +35,9 @@ function GameObject:init(def, x, y)
 
     -- default empty collision callback
     self.onCollide = function() end
+
+    -- empty breaking callback
+    self.onBreak = function() end
 end
 
 function GameObject:update(dt)
@@ -43,4 +49,9 @@ function GameObject:render(adjacentOffsetX, adjacentOffsetY)
         love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.states[self.state].frame or self.frame],
             self.x + adjacentOffsetX, self.y + adjacentOffsetY)
     end
+end
+
+function GameObject:collides(target)
+    return not (self.x + self.width < target.x or self.x > target.x + target.width or
+                self.y + self.height < target.y or self.y > target.y + target.height)
 end

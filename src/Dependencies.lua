@@ -71,5 +71,8 @@ gSounds = {
     ['hit-player'] = love.audio.newSource('sounds/hit_player.wav'),
     ['door'] = love.audio.newSource('sounds/door.wav'),
     ['heart-drop'] = love.audio.newSource('sounds/heart-drop.wav'),
-    ['heart-pickup'] = love.audio.newSource('sounds/heart-pickup.wav')
+    ['heart-pickup'] = love.audio.newSource('sounds/heart-pickup.wav'),
+
+    -- https://freesound.org/people/Kinoton/sounds/399080/
+    ['pot-break'] = love.audio.newSource('sounds/pot-break.wav')
 }
