@@ -80,6 +80,8 @@ end
     Randomly creates an assortment of obstacles for the player to navigate around.
 ]]
 function Room:generateObjects()
+
+    -- generate the switch
     table.insert(self.objects, GameObject(
         GAME_OBJECT_DEFS['switch'],
         math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
@@ -102,6 +104,17 @@ function Room:generateObjects()
             end
 
             gSounds['door']:play()
+        end
+    end
+    
+    -- generate pots
+    for y = 2, self.width - 1 do
+        for x = 2, self.height - 1 do
+            if math.random(POT_SPAWN_CHANCE) == 1 then
+                table.insert(self.objects,
+                    GameObject(GAME_OBJECT_DEFS['pot'], y * TILE_SIZE, x * TILE_SIZE)
+                )
+            end
         end
     end
 end

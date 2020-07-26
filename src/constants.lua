@@ -26,7 +26,8 @@ PLAYER_WALK_SPEED = 60
 --
 
 -- reciprocal of this number is the probability
-HEART_SPAWN_CHANCE = 2
+HEART_SPAWN_CHANCE = 10
+POT_SPAWN_CHANCE = 10
 
 --
 -- map constants
