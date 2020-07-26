@@ -162,13 +162,16 @@ function Room:update(dt)
             if entity.health <= 0 then
                 entity.dead = true
                 if math.random(HEART_SPAWN_CHANCE) == 1 then
+
+                    -- instantiate heart and add it to objects list
                     local heart = GameObject(GAME_OBJECT_DEFS['heart'], entity.x, entity.y)
                     table.insert(self.objects, heart)
-
+                    gSounds['heart-drop']:play()
 
                     heart.onCollide = function()
                         if heart.isActive then
                             self.player.health = math.min(6, self.player.health + 2)
+                            gSounds['heart-pickup']:play()
                             heart.isActive = false
                         end
                     end                
