@@ -50,6 +50,7 @@ GAME_OBJECT_DEFS = {
         height = 16,
         solid = true,
         breakable = true,
+        liftable = true,
         defaultState = 'onGround',
         states = {
             ['onGround'] = {

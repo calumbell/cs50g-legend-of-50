@@ -21,6 +21,8 @@ function GameObject:init(def, x, y)
     -- whether it can be broken by attacking it
     self.breakable = def.breakable
 
+    self.liftable = def.liftable or false
+
     self.defaultState = def.defaultState
     self.state = self.defaultState
     self.states = def.states

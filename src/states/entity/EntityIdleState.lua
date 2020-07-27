@@ -8,9 +8,9 @@
 
 EntityIdleState = Class{__includes = BaseState}
 
-function EntityIdleState:init(entity)
+function EntityIdleState:init(entity, dungeon)
     self.entity = entity
-
+    self.dungeon = dungeon
     self.entity:changeAnimation('idle-' .. self.entity.direction)
 
     -- used for AI waiting

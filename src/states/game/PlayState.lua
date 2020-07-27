@@ -31,7 +31,7 @@ function PlayState:init()
     
     self.player.stateMachine = StateMachine {
         ['walk'] = function() return PlayerWalkState(self.player, self.dungeon) end,
-        ['idle'] = function() return PlayerIdleState(self.player) end,
+        ['idle'] = function() return PlayerIdleState(self.player, self.dungeon) end,
         ['swing-sword'] = function() return PlayerSwingSwordState(self.player, self.dungeon) end,
         ['lift-pot'] = function() return PlayerLiftPotState(self.player, self.dungeon) end,
         ['walk-pot'] = function() return PlayerWalkPotState(self.player, self.dungeon) end
