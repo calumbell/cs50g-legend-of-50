@@ -10,7 +10,7 @@ require 'src/Dependencies'
 
 function love.load()
     math.randomseed(os.time())
-    love.window.setTitle('Legend of Zelda')
+    love.window.setTitle('Legend of 50')
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {

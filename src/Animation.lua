@@ -21,6 +21,9 @@ function Animation:init(def)
 
     -- used to see if we've seen a whole loop of the animation
     self.timesPlayed = 0
+
+    self.pause = false
+
 end
 
 function Animation:refresh()
@@ -31,7 +34,7 @@ end
 
 function Animation:update(dt)
     -- if not a looping animation and we've played at least once, exit
-    if not self.looping and self.timesPlayed > 0 then
+    if not self.looping and self.timesPlayed > 0 or self.pause then
         return
     end
 
