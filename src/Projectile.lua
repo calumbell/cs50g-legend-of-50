@@ -43,9 +43,25 @@ end
 function Projectile:update(dt)
 	self.x = self.x + (self.dx * dt)
 	self.y = self.y + (self.dy * dt)
+
+	if self.active then
+		if self:wallCollision() then
+			self.active = false
+			gSounds['pot-break']:play()
+		end
+	end
 end
 
 function Projectile:render()
 	love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.frame],
 		math.floor(self.x - self.offsetX), math.floor(self.y - self.offsetY))
+end
+
+function Projectile:wallCollision()
+	if self.x <= MAP_RENDER_OFFSET_X  or self.x >= MAP_WIDTH*TILE_SIZE
+		or self.y <= MAP_RENDER_OFFSET_Y or self.y >= MAP_HEIGHT*TILE_SIZE then
+		return true
+	else
+		return false
+	end
 end
