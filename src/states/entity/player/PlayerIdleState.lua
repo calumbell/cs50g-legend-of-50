@@ -40,6 +40,8 @@ function PlayerIdleState:update(dt)
             obj.carrier = self.entity
             obj.solid = false
 
+            gSounds['lift']:play()
+
             -- change state
             self.entity:changeState('lift-pot')
         end

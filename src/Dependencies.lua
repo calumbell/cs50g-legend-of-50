@@ -82,5 +82,9 @@ gSounds = {
     ['heart-pickup'] = love.audio.newSource('sounds/heart-pickup.wav'),
 
     -- https://freesound.org/people/Kinoton/sounds/399080/
-    ['pot-break'] = love.audio.newSource('sounds/pot-break.wav')
+    ['pot-break'] = love.audio.newSource('sounds/pot-break.wav'),
+    ['lift'] = love.audio.newSource('sounds/lift.wav'),
+
+    -- https://freesound.org/people/Brsjak/sounds/482880/
+    ['throw'] = love.audio.newSource('sounds/throw.wav')
 }

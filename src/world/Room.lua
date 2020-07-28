@@ -251,6 +251,15 @@ function Room:update(dt)
                 object:onCollide()
             end
 
+            -- check for object/projectile collisions
+            for k, projectile in pairs(self.projectiles) do
+                if object:collides(projectile) and object.breakable and projectile.active then
+                    object.isActive = false
+                    projectile.active = false
+                    gSounds['pot-break']:play()
+                end
+            end
+
         -- if an object isn't active, flag it for removal
         else
             table.insert(keysToRemove, k)
