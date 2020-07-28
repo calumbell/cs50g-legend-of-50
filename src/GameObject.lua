@@ -23,6 +23,9 @@ function GameObject:init(def, x, y)
 
     self.liftable = def.liftable or false
 
+    -- contains reference to an entity carrtying the object
+    self.carriedBy = nil
+
     self.defaultState = def.defaultState
     self.state = self.defaultState
     self.states = def.states
@@ -34,6 +37,9 @@ function GameObject:init(def, x, y)
     self.height = def.height
 
     self.isActive = true
+
+    -- contains reference to an entity carrtying the object
+    self.carrier = nil
 
     -- default empty collision callback
     self.onCollide = function() end
@@ -50,6 +56,11 @@ function GameObject:render(adjacentOffsetX, adjacentOffsetY)
     if self.isActive then    
         love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.states[self.state].frame or self.frame],
             self.x + adjacentOffsetX, self.y + adjacentOffsetY)
+    end
+
+    if self.carrier then
+        self.x = self.carrier.x
+        self.y = self.carrier.y
     end
 end
 

@@ -28,12 +28,20 @@ function PlayerIdleState:update(dt)
         self.entity:changeState('swing-sword')
     end
 
+    -- on return down, lift facing pot
     if love.keyboard.wasPressed('return') then
-        local obj = PlayerIdleState:getObjectInFront(self.entity, self.dungeon.currentRoom.objects)
+
+        -- check for presence of a pot in front of player
+        obj = PlayerIdleState:getObjectInFront(self.entity, self.dungeon.currentRoom.objects)
+        
         if obj ~= nil then
-            self.entity:changeState('lift-pot', {
-                object = obj
-            })
+            -- player and object store references to eachother
+            self.entity.carrying = obj
+            obj.carrier = self.entity
+            obj.solid = false
+
+            -- change state
+            self.entity:changeState('lift-pot')
         end
     end
 end
@@ -51,11 +59,9 @@ function PlayerIdleState:getObjectInFront(entity, objects)
     elseif entity.direction == 'up' then
         x = entity.x
         y = entity.y - offset
-        print(entity.direction)
     else
         x = entity.x
         y = entity.y + offset
-        print(entity.direction)
     end
 
     local pickupBox = Hitbox(x, y, entity.width, entity.height)

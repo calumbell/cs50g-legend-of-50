@@ -15,9 +15,12 @@ function PlayerLiftPotState:init(player, dungeon)
     self.player.currentAnimation.looping = false
 end
 
+
 function PlayerLiftPotState:enter(params)
     self.player.currentAnimation:refresh()
 end
+
+
 
 function PlayerLiftPotState:update(dt)
 	if self.player.currentAnimation:getCurrentFrame() == 3 then
@@ -30,6 +33,8 @@ function PlayerLiftPotState:update(dt)
     end
 
     if love.keyboard.isDown('space') then
+        self.player.carrying.carrier = nil
+        self.player.carrying = nil
         self.player:changeState('idle')
     end
 
