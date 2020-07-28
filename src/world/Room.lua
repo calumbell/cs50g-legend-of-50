@@ -33,6 +33,9 @@ function Room:init(player)
     table.insert(self.doorways, Doorway('left', false, self))
     table.insert(self.doorways, Doorway('right', false, self))
 
+    -- projectiles in the room (empty to start)
+    self.projectiles = {}
+
     -- used for centering the dungeon rendering
     self.renderOffsetX = MAP_RENDER_OFFSET_X
     self.renderOffsetY = MAP_RENDER_OFFSET_Y
@@ -177,6 +180,7 @@ function Room:update(dt)
 
     self.player:update(dt)
 
+    -- update entities
     for i = #self.entities, 1, -1 do
         local entity = self.entities[i]
 
@@ -221,9 +225,12 @@ function Room:update(dt)
         end
     end
 
+    -- keep track of keys of objects to remove from the room
     local keysToRemove = {}
 
+    -- update objects
     for k, object in pairs(self.objects) do
+
         -- if an object is active, run update and collision logic
         if object.isActive then
             object:update(dt)
@@ -242,6 +249,14 @@ function Room:update(dt)
     -- remove keys that have been flagged for removal
     for k = #keysToRemove, -1 do
         table.remove(self.objects, k)
+    end
+
+    -- update projectiles
+    for k, projectile in pairs(self.projectiles) do
+        -- only update active projectiles
+        if projectile.active then
+            projectile:update(dt)
+        end
     end
 
 end
@@ -268,6 +283,10 @@ function Room:render()
 
     for k, entity in pairs(self.entities) do
         if not entity.dead then entity:render(self.adjacentOffsetX, self.adjacentOffsetY) end
+    end
+
+    for k, projectile in pairs(self.projectiles) do
+        if projectile.active then projectile:render() end
     end
 
     -- stencil out the door arches so it looks like the player is going through

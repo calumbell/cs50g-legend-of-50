@@ -33,9 +33,11 @@ function PlayerLiftPotState:update(dt)
     end
 
     if love.keyboard.isDown('space') then
-        self.player.carrying.carrier = nil
-        self.player.carrying = nil
-        self.player:changeState('idle')
+        if self.player.carrying then
+            local proj = self.player.carrying:throw()
+            table.insert(self.dungeon.currentRoom.projectiles, proj)
+            self.player:changeState('idle')
+        end
     end
 
 end

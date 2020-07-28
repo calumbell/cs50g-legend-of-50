@@ -30,6 +30,11 @@ HEART_SPAWN_CHANCE = 10
 POT_SPAWN_CHANCE = 10
 
 --
+-- projectile constants
+--
+PROJECTILE_START_SPEED = 120
+
+--
 -- map constants
 --
 MAP_WIDTH = VIRTUAL_WIDTH / TILE_SIZE - 2

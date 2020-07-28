@@ -68,3 +68,27 @@ function GameObject:collides(target)
     return not (self.x + self.width < target.x or self.x > target.x + target.width or
                 self.y + self.height < target.y or self.y > target.y + target.height)
 end
+
+--
+-- if an object is being carrier by an entity, throw it
+-- returns a Projectile or nil if no object is not being carried
+--
+
+function GameObject:throw()
+
+    -- if the object is not being carrier, return nil
+    if not self.carrier then
+        return nil
+    end
+
+    -- instantiate new projectile and add it to the room projectile list
+    local proj = Projectile(self.carrier.x, self.carrier.y, self.carrier.direction,
+        PROJECTILE_DEFS[self.type])
+
+    self.carrier.carrying = nil
+    self.carrier = nil
+    self.isActive = false
+
+    return proj
+end
+

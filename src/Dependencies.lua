@@ -15,6 +15,8 @@ require 'src/GameObject'
 require 'src/game_objects'
 require 'src/Hitbox'
 require 'src/Player'
+require 'src/Projectile'
+require 'src/projectile_defs'
 require 'src/StateMachine'
 require 'src/Util'
 
