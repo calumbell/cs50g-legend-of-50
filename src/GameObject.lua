@@ -60,7 +60,7 @@ function GameObject:render(adjacentOffsetX, adjacentOffsetY)
 
     if self.carrier then
         self.x = self.carrier.x
-        self.y = self.carrier.y
+        self.y = self.carrier.y - self.height + self.carrier.offsetY + 3
     end
 end
 
