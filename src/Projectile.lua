@@ -12,6 +12,7 @@ function Projectile:init(x, y, dir, def)
     self.x = x
     self.y = y
     self.direction = dir
+    self.distanceTraveled = 0
 
     self.type = def.type
     self.width = def.width
@@ -44,8 +45,10 @@ function Projectile:update(dt)
 	self.x = self.x + (self.dx * dt)
 	self.y = self.y + (self.dy * dt)
 
+	self.distanceTraveled = self.distanceTraveled + math.abs(self.dx * dt) + math.abs(self.dy * dt)
+
 	if self.active then
-		if self:wallCollision() then
+		if self:wallCollision() or self.distanceTraveled >= 4 * TILE_SIZE then
 			self.active = false
 			gSounds['pot-break']:stop()
 			gSounds['pot-break']:play()
