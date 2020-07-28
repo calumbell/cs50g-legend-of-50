@@ -43,7 +43,9 @@ function PlayerIdleState:update(dt)
             gSounds['lift']:play()
 
             -- change state
-            self.entity:changeState('lift-pot')
+            self.entity:changeState('lift-pot', {
+                animate = true
+            })
         end
     end
 end

@@ -82,7 +82,7 @@ function GameObject:throw()
     end
 
     -- instantiate new projectile and add it to the room projectile list
-    local proj = Projectile(self.carrier.x, self.carrier.y, self.carrier.direction,
+    local proj = Projectile(self.x, self.y, self.carrier.direction,
         PROJECTILE_DEFS[self.type])
     gSounds['throw']:play()
     self.carrier.carrying = nil

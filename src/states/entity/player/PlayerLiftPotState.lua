@@ -17,7 +17,12 @@ end
 
 
 function PlayerLiftPotState:enter(params)
-    self.player.currentAnimation:refresh()
+    if params['animate'] then
+        self.player.currentAnimation:refresh()
+    else
+        self.player.currentAnimation.currentFrame = 3
+        self.player.currentAnimation.pause = true        
+    end
 end
 
 

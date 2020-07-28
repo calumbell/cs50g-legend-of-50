@@ -23,7 +23,9 @@ function PlayerWalkPotState:update(dt)
         self.entity.direction = 'down'
         self.entity:changeAnimation('walk-pot-down')
     else
-        self.entity:changeState('lift-pot')
+        self.entity:changeState('lift-pot', {
+            animate = false
+        })
     end
 
     -- perform base collision detection against walls

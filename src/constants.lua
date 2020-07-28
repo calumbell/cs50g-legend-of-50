@@ -33,7 +33,7 @@ POT_SPAWN_CHANCE = 10
 -- projectile constants
 --
 PROJECTILE_START_SPEED = 120
-
+GRAVITY = 0.1
 --
 -- map constants
 --

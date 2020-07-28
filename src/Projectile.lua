@@ -46,6 +46,7 @@ function Projectile:update(dt)
 	self.y = self.y + (self.dy * dt)
 
 	self.distanceTraveled = self.distanceTraveled + math.abs(self.dx * dt) + math.abs(self.dy * dt)
+	self.y = self.y + (self.y * GRAVITY * dt)
 
 	if self.active then
 		if self:wallCollision() or self.distanceTraveled >= 4 * TILE_SIZE then
