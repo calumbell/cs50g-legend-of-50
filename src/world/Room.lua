@@ -223,6 +223,17 @@ function Room:update(dt)
                 gStateMachine:change('game-over')
             end
         end
+
+        -- check for projectile collisions
+        if not entity.dead and self.projectiles then
+            for k, projectile in pairs(self.projectiles) do
+                if entity:collides(projectile) and projectile.active then
+                    projectile.active = false
+                    gSounds['pot-break']:play()
+                    entity:damage(1)
+                end
+            end
+        end
     end
 
     -- keep track of keys of objects to remove from the room

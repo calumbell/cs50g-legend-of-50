@@ -47,6 +47,7 @@ function Projectile:update(dt)
 	if self.active then
 		if self:wallCollision() then
 			self.active = false
+			gSounds['pot-break']:stop()
 			gSounds['pot-break']:play()
 		end
 	end
