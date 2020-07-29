@@ -21,10 +21,17 @@ function GameObject:init(def, x, y)
     -- whether it can be broken by attacking it
     self.breakable = def.breakable
 
+    -- whether this object can be lifted by the player
     self.liftable = def.liftable or false
 
     -- contains reference to an entity carrtying the object
     self.carriedBy = nil
+
+    -- whether to render this object bobbing up and down, and by how much
+    self.floating = def.floating or false
+    self.floatOffsetMax = def.floatOffsetMax or nil
+    self.floatRate = def.floatRate or nil
+    self.floatOffsetCurrent = 0
 
     self.defaultState = def.defaultState
     self.state = self.defaultState
@@ -50,12 +57,26 @@ end
 
 function GameObject:update(dt)
 
+    -- animate floating sprites
+    if self.floating then
+        self.floatOffsetCurrent = self.floatOffsetCurrent + (self.floatRate * dt)
+
+        if self.floatOffsetCurrent >= self.floatOffsetMax then
+            self.floatOffsetCurrent = self.floatOffsetMax
+            self.floatRate = -self.floatRate
+        end
+
+        if self.floatOffsetCurrent < 0 then
+            self.floatOffsetCurrent = 0
+            self.floatRate = -self.floatRate
+        end
+    end
 end
 
 function GameObject:render(adjacentOffsetX, adjacentOffsetY)
     if self.isActive then    
         love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.states[self.state].frame or self.frame],
-            self.x + adjacentOffsetX, self.y + adjacentOffsetY)
+            self.x + adjacentOffsetX, self.y + math.floor(self.floatOffsetCurrent) + adjacentOffsetY)
     end
 
     if self.carrier then
