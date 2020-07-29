@@ -64,7 +64,7 @@ end
 
 function Projectile:wallCollision()
 	if self.x <= MAP_RENDER_OFFSET_X  or self.x >= MAP_WIDTH*TILE_SIZE
-		or self.y <= MAP_RENDER_OFFSET_Y or self.y >= MAP_HEIGHT*TILE_SIZE then
+		or self.y <= MAP_RENDER_OFFSET_Y - 8 or self.y >= MAP_HEIGHT*TILE_SIZE then
 		return true
 	else
 		return false
