@@ -32,7 +32,7 @@ function PlayerIdleState:update(dt)
     if love.keyboard.wasPressed('return') then
 
         -- check for presence of a pot in front of player
-        obj = PlayerIdleState:getObjectInFront(self.entity, self.dungeon.currentRoom.objects)
+        local obj = PlayerIdleState:getObjectInFront(self.entity, self.dungeon.currentRoom.objects)
         
         if obj ~= nil then
             -- player and object store references to eachother
@@ -41,7 +41,10 @@ function PlayerIdleState:update(dt)
             obj.solid = false
 
             gSounds['lift']:play()
-
+            Timer.tween(0.25, {
+                [obj] = {x =self.entity.x},
+                [obj] = {y =self.entity.y - obj.height + self.entity.offsetY + 3}
+            })
             -- change state
             self.entity:changeState('lift-pot', {
                 animate = true

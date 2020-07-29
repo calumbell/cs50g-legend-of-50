@@ -252,11 +252,11 @@ function Room:update(dt)
             end
 
             -- check for object/projectile collisions
-            for k, projectile in pairs(self.projectiles) do
+            for i, projectile in pairs(self.projectiles) do
                 if object:collides(projectile) and object.breakable and projectile.active then
-                    object.isActive = false
                     projectile.active = false
                     gSounds['pot-break']:play()
+                    table.insert(keysToRemove, k)
                 end
             end
 
@@ -267,7 +267,7 @@ function Room:update(dt)
     end
 
     -- remove keys that have been flagged for removal
-    for k = #keysToRemove, -1 do
+    for i, k in pairs(keysToRemove) do
         table.remove(self.objects, k)
     end
 
