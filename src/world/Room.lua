@@ -67,7 +67,9 @@ function Room:generateEntities()
             width = 16,
             height = 16,
 
-            health = 1
+            health = 1,
+
+            room = self
         })
 
         self.entities[i].stateMachine = StateMachine {
@@ -207,6 +209,15 @@ function Room:update(dt)
 
             -- if entity health is >0, update it
             else
+
+                --[[
+                -- first check for object collisions
+                for i = #self.objects, 1, -1 do
+                    if entity:collides(self.objects[i]) then
+                        entity.bumped = true
+                    end
+                end ]]
+
                 entity:processAI({room = self}, dt)
                 entity:update(dt)
             end

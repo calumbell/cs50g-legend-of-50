@@ -8,11 +8,9 @@
 
 EntityWalkState = Class{__includes = BaseState}
 
-function EntityWalkState:init(entity, dungeon)
+function EntityWalkState:init(entity)
     self.entity = entity
     self.entity:changeAnimation('walk-down')
-
-    self.dungeon = dungeon
 
     -- used for AI control
     self.moveDuration = 0
@@ -131,10 +129,10 @@ function EntityWalkState:render()
     -- love.graphics.setColor(255, 255, 255, 255)
 end
 
-function EntityWalkState:checkForBumpsWithObjects()
-    if self.dungeon then
-        local objects = self.dungeon.currentRoom.objects
-
+function EntityWalkState:checkForBumpsWithObjects(room)
+    
+    if self.entity.room then
+        local objects = self.entity.room.objects
         for k, object in pairs(objects) do
             if self.entity:collides(object) and object.solid then
                 return true
