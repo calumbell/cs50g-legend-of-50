@@ -63,7 +63,7 @@ function PlayerSwingSwordState:update(dt)
             gSounds['hit-enemy']:play()
         end
     end
-
+    
     -- check if hitbox collides with any breakable objects in scene
     for k, object in pairs(self.dungeon.currentRoom.objects) do
         if object:collides(self.swordHitbox) and object.breakable then

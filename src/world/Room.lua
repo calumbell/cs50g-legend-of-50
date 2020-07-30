@@ -120,9 +120,8 @@ function Room:generateObjects()
                 local pot = GameObject(GAME_OBJECT_DEFS['pot'], y * TILE_SIZE, x * TILE_SIZE)
 
                 pot.onBreak = function ()
+                    gSounds['pot-break']:stop()
                     gSounds['pot-break']:play()
-                    pot.breakable = false
-                    pot.solid = false
                     pot.isActive = false
                 end
 
@@ -267,8 +266,9 @@ function Room:update(dt)
     end
 
     -- remove keys that have been flagged for removal
-    for i, k in pairs(keysToRemove) do
-        table.remove(self.objects, k)
+    for i = #keysToRemove, 1, -1 do
+        print(#keysToRemove)
+        table.remove(self.objects, keysToRemove[i])
     end
 
     -- update projectiles
