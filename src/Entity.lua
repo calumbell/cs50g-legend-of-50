@@ -9,6 +9,7 @@
 Entity = Class{}
 
 function Entity:init(def)
+    self.type = def.type
 
     -- in top-down games, there are four directions instead of two
     self.direction = 'down'

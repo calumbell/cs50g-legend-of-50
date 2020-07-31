@@ -278,7 +278,6 @@ function Room:update(dt)
 
     -- remove keys that have been flagged for removal
     for i = #keysToRemove, 1, -1 do
-        print(#keysToRemove)
         table.remove(self.objects, keysToRemove[i])
     end
 

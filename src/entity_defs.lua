@@ -8,6 +8,7 @@
 
 ENTITY_DEFS = {
     ['player'] = {
+        type = 'player',
         walkSpeed = PLAYER_WALK_SPEED,
         animations = {
             ['lift-pot-left'] = {
@@ -117,6 +118,7 @@ ENTITY_DEFS = {
         }
     },
     ['skeleton'] = {
+        type = 'skeleton',
         texture = 'entities',
         animations = {
             ['walk-left'] = {
@@ -150,6 +152,7 @@ ENTITY_DEFS = {
         }
     },
     ['slime'] = {
+        type = 'slime',
         texture = 'entities',
         animations = {
             ['walk-left'] = {
@@ -183,6 +186,7 @@ ENTITY_DEFS = {
         }
     },
     ['bat'] = {
+        type = 'bat',
         texture = 'entities',
         animations = {
             ['walk-left'] = {
@@ -220,6 +224,7 @@ ENTITY_DEFS = {
         }
     },
     ['ghost'] = {
+        type = 'ghost',
         texture = 'entities',
         animations = {
             ['walk-left'] = {
@@ -253,6 +258,7 @@ ENTITY_DEFS = {
         }
     },
     ['spider'] = {
+        type = 'spider',
         texture = 'entities',
         animations = {
             ['walk-left'] = {
