@@ -23,7 +23,7 @@ end
 function EntityWalkState:update(dt)
     
     -- assume we didn't hit a wall
-    self.bumped = self:checkForCollisions(self, dt)
+    self.bumped = self:checkForCollisions(dt)
 
 end
 
@@ -64,7 +64,7 @@ function EntityWalkState:render()
 end
 
 
-function EntityWalkState:checkForCollisions(self, dt)
+function EntityWalkState:checkForCollisions(dt)
     -- check for collisions to the left
     if self.entity.direction == 'left' then
         self.entity.x = self.entity.x - self.entity.walkSpeed * dt
@@ -134,7 +134,7 @@ function EntityWalkState:checkForCollisions(self, dt)
 end
 
 
-function EntityWalkState:checkForBumpsWithObjects(room)   
+function EntityWalkState:checkForBumpsWithObjects()
     if self.entity.room then
         local objects = self.entity.room.objects
         for k, object in pairs(objects) do
