@@ -49,7 +49,6 @@ end
     Randomly creates an assortment of enemies for the player to fight.
 ]]
 function Room:generateEntities()
-    self.player.room = self
     local types = {'skeleton', 'slime', 'bat', 'ghost', 'spider'}
 
     for i = 1, 10 do

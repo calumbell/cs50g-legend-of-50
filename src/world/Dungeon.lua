@@ -115,6 +115,7 @@ function Dungeon:finishShifting()
     self.nextRoom = nil
     self.currentRoom.adjacentOffsetX = 0
     self.currentRoom.adjacentOffsetY = 0 
+    self.player.room = self.currentRoom
 end
 
 function Dungeon:update(dt)
