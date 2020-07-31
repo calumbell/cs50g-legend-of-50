@@ -60,11 +60,15 @@ function Room:generateEntities()
             walkSpeed = ENTITY_DEFS[type].walkSpeed or 20,
 
             -- ensure X and Y are within bounds of the map
-            x = math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
+
+            x = (math.random(2, self.width - 1) * TILE_SIZE),
+            y = (math.random(2, self.height - 1) * TILE_SIZE),
+
+            --[[x = math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
                 VIRTUAL_WIDTH - TILE_SIZE * 2 - 16),
             y = math.random(MAP_RENDER_OFFSET_Y + TILE_SIZE,
                 VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16),
-            
+            ]]
             width = 16,
             height = 16,
 
@@ -119,8 +123,13 @@ function Room:generateObjects()
 
         -- iterate room colms
         for x = 2, self.height - 1 do
+
+            -- random chance of spawning a pot
             if math.random(POT_SPAWN_CHANCE) == 1 then
+
+                -- create new pot and flag to check for pot collisions on spawn
                 local pot = GameObject(GAME_OBJECT_DEFS['pot'], y * TILE_SIZE, x * TILE_SIZE)
+                local spaceOccupied = false
 
                 pot.onBreak = function ()
                     gSounds['pot-break']:stop()
@@ -128,7 +137,14 @@ function Room:generateObjects()
                     pot.isActive = false
                 end
 
-                if not self.player:collides(pot) then
+                for i = #self.entities, 1, -1 do
+                    if self.entities[i]:collides(pot) 
+                        or self.player:collides(pot) then
+                        spaceOccupied = true
+                    end
+                end
+
+                if not spaceOccupied then
                     table.insert(self.objects, pot)
                 end
             end

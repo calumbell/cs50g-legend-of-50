@@ -27,7 +27,7 @@ PLAYER_WALK_SPEED = 60
 
 -- reciprocal of this number is the probability
 HEART_SPAWN_CHANCE = 3
-POT_SPAWN_CHANCE = 10
+POT_SPAWN_CHANCE = 3
 
 --
 -- projectile constants
@@ -37,7 +37,7 @@ GRAVITY = 0.1
 --
 -- map constants
 --
-MAP_WIDTH = VIRTUAL_WIDTH / TILE_SIZE - 2
+MAP_WIDTH = math.floor(VIRTUAL_WIDTH / TILE_SIZE) - 2
 MAP_HEIGHT = math.floor(VIRTUAL_HEIGHT / TILE_SIZE) - 2
 
 MAP_RENDER_OFFSET_X = (VIRTUAL_WIDTH - (MAP_WIDTH * TILE_SIZE)) / 2
