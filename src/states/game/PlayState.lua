@@ -10,6 +10,7 @@ PlayState = Class{__includes = BaseState}
 
 function PlayState:init()
     self.player = Player {
+        type = 'player',
         animations = ENTITY_DEFS['player'].animations,
         walkSpeed = ENTITY_DEFS['player'].walkSpeed,
         
@@ -29,6 +30,9 @@ function PlayState:init()
     self.dungeon = Dungeon(self.player)
     self.currentRoom = Room(self.player)
     
+    -- add room reference to player for collision detection
+    self.player.room = currentRoom
+
     self.player.stateMachine = StateMachine {
         ['walk'] = function() return PlayerWalkState(self.player, self.dungeon) end,
         ['idle'] = function() return PlayerIdleState(self.player, self.dungeon) end,

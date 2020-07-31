@@ -55,6 +55,7 @@ function Room:generateEntities()
         local type = types[math.random(#types)]
 
         table.insert(self.entities, Entity {
+            type = type,
             animations = ENTITY_DEFS[type].animations,
             walkSpeed = ENTITY_DEFS[type].walkSpeed or 20,
 
