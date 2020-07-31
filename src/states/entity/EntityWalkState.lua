@@ -23,74 +23,8 @@ end
 function EntityWalkState:update(dt)
     
     -- assume we didn't hit a wall
-    self.bumped = false
+    self.bumped = self:checkForCollisions(self, dt)
 
-    -- check for collisions to the left
-    if self.entity.direction == 'left' then
-        self.entity.x = self.entity.x - self.entity.walkSpeed * dt
-        
-        -- check for left wall collisions
-        if self.entity.x <= MAP_RENDER_OFFSET_X + TILE_SIZE then 
-            self.entity.x = MAP_RENDER_OFFSET_X + TILE_SIZE
-            self.bumped = true
-        end
-
-        -- check for left solid object collisions
-        if self:checkForBumpsWithObjects() then
-            self.entity.x = self.entity.x + self.entity.walkSpeed * dt
-            self.bumped = true
-        end
-
-    -- check for collisions to the right
-    elseif self.entity.direction == 'right' then
-        self.entity.x = self.entity.x + self.entity.walkSpeed * dt
-
-        -- check for right wall collisions
-        if self.entity.x + self.entity.width >= VIRTUAL_WIDTH - TILE_SIZE * 2 then
-            self.entity.x = VIRTUAL_WIDTH - TILE_SIZE * 2 - self.entity.width
-            self.bumped = true
-        end
-
-        -- check for right solid object collisions
-        if self:checkForBumpsWithObjects() then
-            self.entity.x = self.entity.x - self.entity.walkSpeed * dt
-            self.bumped = true
-        end
-
-    -- check for collisions at the top    
-    elseif self.entity.direction == 'up' then
-        self.entity.y = self.entity.y - self.entity.walkSpeed * dt
-
-        -- check for top wall collision
-        if self.entity.y <= MAP_RENDER_OFFSET_Y + TILE_SIZE - self.entity.height / 2 then 
-            self.entity.y = MAP_RENDER_OFFSET_Y + TILE_SIZE - self.entity.height / 2
-            self.bumped = true
-        end
-
-        -- check for top solid object collision
-        if self:checkForBumpsWithObjects() then
-            self.entity.y = self.entity.y + self.entity.walkSpeed * dt
-            self.bumped = true
-        end
-
-    elseif self.entity.direction == 'down' then
-        self.entity.y = self.entity.y + self.entity.walkSpeed * dt
-
-        local bottomEdge = VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) 
-            + MAP_RENDER_OFFSET_Y - TILE_SIZE
-
-        -- check for bottom wall collision
-        if self.entity.y + self.entity.height >= bottomEdge then
-            self.entity.y = bottomEdge - self.entity.height
-            self.bumped = true
-        end
-
-        -- check for bottom solid object collision
-        if self:checkForBumpsWithObjects() then
-            self.entity.y = self.entity.y - self.entity.walkSpeed * dt
-            self.bumped = true
-        end
-    end
 end
 
 function EntityWalkState:processAI(params, dt)
@@ -129,8 +63,78 @@ function EntityWalkState:render()
     -- love.graphics.setColor(255, 255, 255, 255)
 end
 
-function EntityWalkState:checkForBumpsWithObjects(room)
-    
+
+function EntityWalkState:checkForCollisions(self, dt)
+    -- check for collisions to the left
+    if self.entity.direction == 'left' then
+        self.entity.x = self.entity.x - self.entity.walkSpeed * dt
+        
+        -- check for left wall collisions
+        if self.entity.x <= MAP_RENDER_OFFSET_X + TILE_SIZE then 
+            self.entity.x = MAP_RENDER_OFFSET_X + TILE_SIZE
+            return true
+        end
+
+        -- check for left solid object collisions
+        if self:checkForBumpsWithObjects() then
+            self.entity.x = self.entity.x + self.entity.walkSpeed * dt
+            return true
+        end
+
+    -- check for collisions to the right
+    elseif self.entity.direction == 'right' then
+        self.entity.x = self.entity.x + self.entity.walkSpeed * dt
+
+        -- check for right wall collisions
+        if self.entity.x + self.entity.width >= VIRTUAL_WIDTH - TILE_SIZE * 2 then
+            self.entity.x = VIRTUAL_WIDTH - TILE_SIZE * 2 - self.entity.width
+            return true
+        end
+
+        -- check for right solid object collisions
+        if self:checkForBumpsWithObjects() then
+            self.entity.x = self.entity.x - self.entity.walkSpeed * dt
+            return true
+        end
+
+    -- check for collisions at the top    
+    elseif self.entity.direction == 'up' then
+        self.entity.y = self.entity.y - self.entity.walkSpeed * dt
+
+        -- check for top wall collision
+        if self.entity.y <= MAP_RENDER_OFFSET_Y + TILE_SIZE - self.entity.height / 2 then 
+            self.entity.y = MAP_RENDER_OFFSET_Y + TILE_SIZE - self.entity.height / 2
+            return true
+        end
+
+        -- check for top solid object collision
+        if self:checkForBumpsWithObjects() then
+            self.entity.y = self.entity.y + self.entity.walkSpeed * dt
+            return true
+        end
+
+    elseif self.entity.direction == 'down' then
+        self.entity.y = self.entity.y + self.entity.walkSpeed * dt
+
+        local bottomEdge = VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) 
+            + MAP_RENDER_OFFSET_Y - TILE_SIZE
+
+        -- check for bottom wall collision
+        if self.entity.y + self.entity.height >= bottomEdge then
+            self.entity.y = bottomEdge - self.entity.height
+            return true
+        end
+
+        -- check for bottom solid object collision
+        if self:checkForBumpsWithObjects() then
+            self.entity.y = self.entity.y - self.entity.walkSpeed * dt
+            return true
+        end
+    end
+end
+
+
+function EntityWalkState:checkForBumpsWithObjects(room)   
     if self.entity.room then
         local objects = self.entity.room.objects
         for k, object in pairs(objects) do
