@@ -10,11 +10,13 @@ function ParticleEffect:init(def)
     self.psystem = love.graphics.newParticleSystem(gTextures['particle'], 64)
 
     -- particles last between 0.5-1s
-    self.psystem:setParticleLifetime(0.25, 0.5)
+    self.psystem:setParticleLifetime(0.1, 0.25)
+
+    self.psystem:setSizes(0.5, 0.25)
 
     -- set acc. to any value between (X1,Y1) and (X2,Y2)
-    self.psystem:setLinearAcceleration(-15, 0, 15, 80)
-    self.psystem:setAreaSpread('normal', 10, 10)
+    self.psystem:setLinearAcceleration(-5, 0, 5, 30)
+    self.psystem:setAreaSpread('normal', 2, 2)
     self.psystem:setColors(
         255, 255, 255, 255,
         255, 255, 255, 255
