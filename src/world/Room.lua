@@ -36,6 +36,10 @@ function Room:init(player)
     -- projectiles in the room (empty to start)
     self.projectiles = {}
 
+    -- particle systems to create 
+    self.psystems = {}
+    self:generateParticleSystems()
+
     -- used for centering the dungeon rendering
     self.renderOffsetX = MAP_RENDER_OFFSET_X
     self.renderOffsetY = MAP_RENDER_OFFSET_Y
@@ -192,6 +196,10 @@ function Room:generateWallsAndFloors()
     end
 end
 
+function Room:generateParticleSystems()
+    self.psystems['hit-entity'] = ParticleEffect('hit-entity')
+end
+
 function Room:update(dt)
     -- don't update anything if we are sliding to another room (we have offsets)
     if self.adjacentOffsetX ~= 0 or self.adjacentOffsetY ~= 0 then return end
@@ -226,15 +234,6 @@ function Room:update(dt)
 
             -- if entity health is >0, update it
             else
-
-                --[[
-                -- first check for object collisions
-                for i = #self.objects, 1, -1 do
-                    if entity:collides(self.objects[i]) then
-                        entity.bumped = true
-                    end
-                end ]]
-
                 entity:processAI({room = self}, dt)
                 entity:update(dt)
             end
@@ -306,6 +305,11 @@ function Room:update(dt)
         end
     end
 
+    -- update particles
+    for k, psystem in pairs(self.psystems) do
+        psystem:update(dt)
+    end
+
 end
 
 function Room:render()
@@ -336,6 +340,9 @@ function Room:render()
         if projectile.active then projectile:render() end
     end
 
+    for k, psystem in pairs(self.psystems) do
+        psystem:render()
+    end
     -- stencil out the door arches so it looks like the player is going through
     love.graphics.stencil(function()
         -- left

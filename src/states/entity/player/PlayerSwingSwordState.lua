@@ -61,6 +61,7 @@ function PlayerSwingSwordState:update(dt)
         if entity:collides(self.swordHitbox) then
             entity:damage(1)
             gSounds['hit-enemy']:play()
+            self.dungeon.currentRoom.psystems['hit-entity']:spawnParticles(entity.x, entity.y)
         end
     end
     

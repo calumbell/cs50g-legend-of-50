@@ -14,6 +14,7 @@ require 'src/entity_defs'
 require 'src/GameObject'
 require 'src/game_objects'
 require 'src/Hitbox'
+require 'src/ParticleEffect'
 require 'src/Player'
 require 'src/Projectile'
 require 'src/projectile_defs'
@@ -82,11 +83,9 @@ gSounds = {
     ['door'] = love.audio.newSource('sounds/door.wav'),
     ['heart-drop'] = love.audio.newSource('sounds/heart-drop.wav'),
     ['heart-pickup'] = love.audio.newSource('sounds/heart-pickup.wav'),
-
     -- https://freesound.org/people/Kinoton/sounds/399080/
     ['pot-break'] = love.audio.newSource('sounds/pot-break.wav'),
     ['lift'] = love.audio.newSource('sounds/lift.wav'),
-
     -- https://freesound.org/people/Brsjak/sounds/482880/
     ['throw'] = love.audio.newSource('sounds/throw.wav')
 }
