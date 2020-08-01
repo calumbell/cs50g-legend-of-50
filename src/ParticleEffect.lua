@@ -3,10 +3,8 @@ ParticleEffect = Class{}
 function ParticleEffect:init(def)
 
 	self.name = def.name
-	self.x = 100
-	self.y = 100
 
-	-- initialise particle system to emit on hit/death
+	-- initialise particle system
     self.psystem = love.graphics.newParticleSystem(gTextures['particle'], 64)
 
     -- particles last between 0.5-1s
@@ -30,11 +28,13 @@ end
 
 function ParticleEffect:render()
 	-- render particles
-    love.graphics.draw(self.psystem, self.x + 16, self.y + 8)
+	if self.x and self.y then
+    	love.graphics.draw(self.psystem, self.x + 8, self.y + 8)
+    end
 end
 
 function ParticleEffect:spawnParticles(x, y)
 	self.x = x
 	self.y = y
-	self.psystem:emit(64)
+	self.psystem:emit(32)
 end

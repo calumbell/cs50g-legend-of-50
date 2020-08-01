@@ -33,12 +33,12 @@ function PlayerSwingSwordState:init(player, dungeon)
         hitboxY = self.player.y + 2
     elseif direction == 'up' then
         hitboxWidth = 16
-        hitboxHeight = 8
+        hitboxHeight = 6
         hitboxX = self.player.x
         hitboxY = self.player.y - hitboxHeight
     else
         hitboxWidth = 16
-        hitboxHeight = 8
+        hitboxHeight = 10
         hitboxX = self.player.x
         hitboxY = self.player.y + self.player.height
     end
@@ -65,13 +65,6 @@ function PlayerSwingSwordState:update(dt)
         end
     end
     
-    -- check if hitbox collides with any breakable objects in scene
-    for k, object in pairs(self.dungeon.currentRoom.objects) do
-        if object:collides(self.swordHitbox) and object.breakable then
-            object:onBreak()
-        end
-    end
-
     if self.player.currentAnimation.timesPlayed > 0 then
         self.player.currentAnimation.timesPlayed = 0
         self.player:changeState('idle')
@@ -79,6 +72,13 @@ function PlayerSwingSwordState:update(dt)
 
     if love.keyboard.wasPressed('space') then
         self.player:changeState('swing-sword')
+    end
+
+    -- check if hitbox collides with any breakable objects in scene
+    for k, object in pairs(self.dungeon.currentRoom.objects) do
+        if object:collides(self.swordHitbox) and object.breakable then
+            object:onBreak()
+        end
     end
 end
 

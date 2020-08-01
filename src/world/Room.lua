@@ -139,6 +139,12 @@ function Room:generateObjects()
                     gSounds['pot-break']:stop()
                     gSounds['pot-break']:play()
                     pot.isActive = false
+
+                    -- set up particle effects when pot breaks
+                    local newPsystem = ParticleEffect(PARTICLE_EFFECT_DEFS['break-object'])
+                    newPsystem:spawnParticles(pot.x, pot.y)
+                    table.insert(self.psystems, newPsystem)
+
                 end
 
                 for i = #self.entities, 1, -1 do
@@ -198,6 +204,8 @@ end
 
 function Room:generateParticleSystems()
     self.psystems['hit-entity'] = ParticleEffect('hit-entity')
+
+    -- nb. obj. break particles are spawned 
 end
 
 function Room:update(dt)
@@ -250,7 +258,7 @@ function Room:update(dt)
             end
         end
 
-        -- check for projectile collisions
+        -- check for projectile/entity collisions
         if not entity.dead and self.projectiles then
             for k, projectile in pairs(self.projectiles) do
                 if entity:collides(projectile) and projectile.active then
@@ -281,7 +289,7 @@ function Room:update(dt)
             for i, projectile in pairs(self.projectiles) do
                 if object:collides(projectile) and object.breakable and projectile.active then
                     projectile.active = false
-                    gSounds['pot-break']:play()
+                    object:onBreak()
                     table.insert(keysToRemove, k)
                 end
             end
