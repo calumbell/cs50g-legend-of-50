@@ -9,14 +9,14 @@ function ParticleEffect:init(def)
 
     -- set colours using def
     self.psystem:setColors(
-        def.r, def.g, def.b, 255,
-        def.r, def.g, def.b, 0
+        def.r1, def.g1, def.b1, 150,
+        def.r2, def.g2, def.b2, 0
     )
 
     -- particles last between 0.5-1s
-    self.psystem:setParticleLifetime(0.1, 0.5)
+    self.psystem:setParticleLifetime(def.duration, def.duration/4)
 
-    self.psystem:setSizes(1, 0.25)
+    self.psystem:setSizes(def.size, def.size/2)
 
     -- set acc. to any value between (X1,Y1) and (X2,Y2)
     if def.direction == 'down' then
@@ -27,6 +27,8 @@ function ParticleEffect:init(def)
 
     self.psystem:setAreaSpread('normal', def.spreadX, def.spreadY)
     
+    -- number of particles to emit
+    self.n = def.n
 
 end
 
@@ -45,5 +47,5 @@ end
 function ParticleEffect:spawnParticles(x, y)
 	self.x = x
 	self.y = y
-	self.psystem:emit(32)
+	self.psystem:emit(self.n)
 end
