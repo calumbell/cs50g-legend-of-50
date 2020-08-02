@@ -139,7 +139,6 @@ function Room:generateObjects()
                     local newPsystem = ParticleEffect(PARTICLE_EFFECT_DEFS['break-object'])
                     newPsystem:spawnParticles(pot.x, pot.y)
                     table.insert(self.psystems, newPsystem)
-
                 end
 
                 -- stop pot spawning on top of switch
@@ -214,8 +213,8 @@ end
 
 function Room:generateParticleSystems()
     self.psystems['hit-entity'] = ParticleEffect(PARTICLE_EFFECT_DEFS['hit-entity'])
-
-    -- nb. obj. break particles are spawned 
+    self.psystems['projectile-hit-entity'] = ParticleEffect(PARTICLE_EFFECT_DEFS['projectile-hit-entity'])
+    -- nb. obj. break psystems are members of objects
 end
 
 function Room:update(dt)
@@ -268,12 +267,14 @@ function Room:update(dt)
             end
         end
 
-        -- check for projectile/entity collisions
+        -- calculate projectile/entity collisions
         if not entity.dead and self.projectiles then
             for k, projectile in pairs(self.projectiles) do
                 if entity:collides(projectile) and projectile.active then
+                    self.psystems['projectile-hit-entity']:spawnParticles(entity.x, entity.y)
                     projectile.active = false
                     gSounds['pot-break']:play()
+                    gSounds['hit-enemy']:play()
                     entity:damage(1)
                 end
             end
@@ -349,6 +350,7 @@ function Room:render()
     -- store reference to carried objects to render on top of static objects
     local carried = nil
 
+    -- render objects
     for k, object in pairs(self.objects) do
         if object.carrier == nil then
             object:render(self.adjacentOffsetX, self.adjacentOffsetY)
@@ -357,22 +359,26 @@ function Room:render()
         end
     end
 
-    -- if there is a carried object, render it
+    -- if there is a carried object, render it after the others
     if carried then
         carried:render(self.adjacentOffsetX, self.adjacentOffsetY)
     end
 
+    -- render all non-dead entities
     for k, entity in pairs(self.entities) do
         if not entity.dead then entity:render(self.adjacentOffsetX, self.adjacentOffsetY) end
     end
 
+    -- render all active projectiles
     for k, projectile in pairs(self.projectiles) do
         if projectile.active then projectile:render() end
     end
 
+    -- render all particle systems
     for k, psystem in pairs(self.psystems) do
         psystem:render()
     end
+
     -- stencil out the door arches so it looks like the player is going through
     love.graphics.stencil(function()
         -- left
@@ -394,6 +400,7 @@ function Room:render()
 
     love.graphics.setStencilTest('less', 1)
     
+    -- render the player
     if self.player then
         self.player:render()
     end

@@ -1,4 +1,26 @@
 PARTICLE_EFFECT_DEFS = {
+
+	['break-object'] = {
+		name = 'break-object',
+
+		-- pot rgb(79, 144, 149)
+		-- a little darker for pot breaking particles?
+		r1 = 59,
+		g1 = 124,
+		b1 = 129,
+
+		r2 = 0,
+		g2 = 0,
+		b2 = 0,
+
+		direction = 'down',
+		size = 1,
+		n = 32,
+		duration = 0.75,
+		spreadX = 4,
+		spreadY = 2
+	},
+
 	['hit-entity'] = {	
 		name = 'hit-entity',
 
@@ -20,24 +42,22 @@ PARTICLE_EFFECT_DEFS = {
 		spreadY = 4
 	},
 
-	['break-object'] = {
-		name = 'break-object',
+	['projectile-hit-entity'] = {
+		name = 'projectile-hit-entity',
 
-		-- pot rgb(79, 144, 149)
-		-- a little darker for pot breaking particles?
 		r1 = 59,
 		g1 = 124,
 		b1 = 129,
 
-		r2 = 0,
-		g2 = 0,
-		b2 = 0,
+		r2 = 255,
+		g2 = 25,
+		b2 = 100,
 
-		direction = 'down',
-		size = 1,
-		n = 32,
-		duration = 0.75,
-		spreadX = 4,
-		spreadY = 2
+		direction = 'up',
+		size = 0.5,
+		n = 64,
+		duration = 1,
+		spreadX = 2,
+		spreadY = 3
 	}
 }
