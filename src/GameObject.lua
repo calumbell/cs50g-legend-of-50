@@ -13,8 +13,15 @@ function GameObject:init(def, x, y)
     self.type = def.type
 
     self.texture = def.texture
-    self.frame = def.frame or 1
 
+    self.frame = def.frame
+    
+    if def.frameOffsets then
+        self.frameOffset = def.frameOffsets[math.random(#def.frameOffsets)]
+    else
+        self.frameOffset = 0
+    end
+    
     -- whether it acts as an obstacle or not
     self.solid = def.solid
 
@@ -75,7 +82,7 @@ end
 
 function GameObject:render(adjacentOffsetX, adjacentOffsetY)
     if self.isActive then    
-        love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.states[self.state].frame or self.frame],
+        love.graphics.draw(gTextures[self.texture], gFrames[self.texture][(self.states[self.state].frame or self.frame) + self.frameOffset],
             self.x + adjacentOffsetX, self.y + math.floor(self.floatOffsetCurrent) + adjacentOffsetY)
     end
 

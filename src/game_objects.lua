@@ -48,6 +48,7 @@ GAME_OBJECT_DEFS = {
     ['pot'] = {
         type = 'pot',
         texture = 'tiles',
+        frameOffsets = {0, 1, 2, 19, 20, 21},
         frame = 14,
         width = 16,
         height = 16,
