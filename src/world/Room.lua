@@ -18,6 +18,13 @@ function Room:init(player)
     self.tiles = {}
     self:generateWallsAndFloors()
 
+    -- doorways that lead to other dungeon rooms
+    self.doorways = {}
+    table.insert(self.doorways, Doorway('top', false, self))
+    table.insert(self.doorways, Doorway('bottom', false, self))
+    table.insert(self.doorways, Doorway('left', false, self))
+    table.insert(self.doorways, Doorway('right', false, self))
+
     -- entities in the room
     self.entities = {}
     self:generateEntities()
@@ -25,13 +32,6 @@ function Room:init(player)
     -- game objects in the room
     self.objects = {}
     self:generateObjects()
-
-    -- doorways that lead to other dungeon rooms
-    self.doorways = {}
-    table.insert(self.doorways, Doorway('top', false, self))
-    table.insert(self.doorways, Doorway('bottom', false, self))
-    table.insert(self.doorways, Doorway('left', false, self))
-    table.insert(self.doorways, Doorway('right', false, self))
 
     -- projectiles in the room (empty to start)
     self.projectiles = {}
@@ -142,6 +142,20 @@ function Room:generateObjects()
 
                 end
 
+                -- stop pot spawning on top of switch
+                if pot:collides(switch) then
+                    spaceOccupied = true
+                end
+
+                -- stop pot spawning near doors (extend the hitbox?)
+                local extPotHitbox = Hitbox(pot.x-8, pot.y-8, pot.width+16, pot.height+16) 
+                for k, doorway in pairs(self.doorways) do
+                    if doorway:collides(extPotHitbox) then
+                        spaceOccupied = true
+                    end
+                end
+
+                -- stop pot spawning on top of entities
                 for i = #self.entities, 1, -1 do
                     if self.entities[i]:collides(pot) 
                         or self.player:collides(pot) then
@@ -149,6 +163,7 @@ function Room:generateObjects()
                     end
                 end
 
+                -- only add pot to room if it is in a feww space                
                 if not spaceOccupied then
                     table.insert(self.objects, pot)
                 end
