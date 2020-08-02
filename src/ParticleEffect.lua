@@ -25,7 +25,6 @@ function ParticleEffect:init(def)
     	self.psystem:setLinearAcceleration(-10, 0, 10, -80)
     end
 
-
     self.psystem:setAreaSpread('normal', def.spreadX, def.spreadY)
     
 

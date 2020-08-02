@@ -21,7 +21,7 @@ function GameObject:init(def, x, y)
     else
         self.frameOffset = 0
     end
-    
+
     -- whether it acts as an obstacle or not
     self.solid = def.solid
 
@@ -112,6 +112,7 @@ function GameObject:throw()
     -- instantiate new projectile and add it to the room projectile list
     local proj = Projectile(self.x, self.y, self.carrier.direction,
         PROJECTILE_DEFS[self.type])
+    proj.frameOffset = self.frameOffset
     gSounds['throw']:play()
     self.carrier.carrying = nil
     self.carrier = nil

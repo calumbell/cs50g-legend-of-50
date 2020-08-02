@@ -24,6 +24,12 @@ function Projectile:init(x, y, dir, def)
     self.texture = def.texture
     self.frame = def.frame
 
+    if def.frameOffsets then
+        self.frameOffset = frameOffsets[math.random(#def.frameOffsets)]
+    else
+        self.frameOffset = 0
+    end
+
     self.active = true
 
     if self.direction == 'left' then
@@ -58,7 +64,7 @@ function Projectile:update(dt)
 end
 
 function Projectile:render()
-	love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.frame],
+	love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.frame + self.frameOffset],
 		math.floor(self.x - self.offsetX), math.floor(self.y - self.offsetY))
 end
 
