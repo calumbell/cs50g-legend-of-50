@@ -3,7 +3,7 @@
 Assignment 5 of EDX/HarvardX's *CS50 Introduction to Games Development* course was to develop features for **Legend of 50**, a game heavily inspired by the SNES Legend of Zelda titles. The game uses the LÖVE 2D game engine (version 10.2) and was programmed in Lua.
 
 ### Requirements
-- LÖVE2D 0.10.2 [Super Toast] *https://github.com/love2d/love/releases/tag/0.10.2*
+- LÖVE 2D 0.10.2 [Super Toast] *https://github.com/love2d/love/releases/tag/0.10.2*
 
 ### Topics
  Some of the topics that we explored over the course of this exercise were:
