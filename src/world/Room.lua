@@ -76,6 +76,19 @@ function Room:generateEntities()
             room = self
         })
 
+        -- make sure entities don't spawn at location of player
+        if self.entities[i]:collides(self.player) then
+            local touchingPlayer = true
+            while touchingPlayer do
+                self.entities[i].x = (math.random(2, self.width - 1) * TILE_SIZE)
+                self.entities[i].y = (math.random(2, self.height - 1) * TILE_SIZE)
+                if self.entities[i]:collides(self.player) then
+                    touchingPlayer = false
+                end
+            end
+        end
+
+        -- initialise entity states
         self.entities[i].stateMachine = StateMachine {
             ['walk'] = function() return EntityWalkState(self.entities[i]) end,
             ['idle'] = function() return EntityIdleState(self.entities[i]) end
