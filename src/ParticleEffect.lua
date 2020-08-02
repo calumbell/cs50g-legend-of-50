@@ -7,18 +7,28 @@ function ParticleEffect:init(def)
 	-- initialise particle system
     self.psystem = love.graphics.newParticleSystem(gTextures['particle'], 64)
 
-    -- particles last between 0.5-1s
-    self.psystem:setParticleLifetime(0.1, 0.25)
+    -- set colours using def
+    self.psystem:setColors(
+        def.r, def.g, def.b, 255,
+        def.r, def.g, def.b, 0
+    )
 
-    self.psystem:setSizes(0.5, 0.25)
+    -- particles last between 0.5-1s
+    self.psystem:setParticleLifetime(0.1, 0.5)
+
+    self.psystem:setSizes(1, 0.25)
 
     -- set acc. to any value between (X1,Y1) and (X2,Y2)
-    self.psystem:setLinearAcceleration(-5, 0, 5, 30)
-    self.psystem:setAreaSpread('normal', 2, 2)
-    self.psystem:setColors(
-        255, 255, 255, 255,
-        255, 255, 255, 255
-    )
+    if def.direction == 'down' then
+    	self.psystem:setLinearAcceleration(-10, 0, 10, 50)
+    elseif def.direction == 'up' then
+    	self.psystem:setLinearAcceleration(-10, 0, 10, -80)
+    end
+
+
+    self.psystem:setAreaSpread('normal', def.spreadX, def.spreadY)
+    
+
 end
 
 

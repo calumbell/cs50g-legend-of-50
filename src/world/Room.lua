@@ -68,11 +68,6 @@ function Room:generateEntities()
             x = (math.random(2, self.width - 1) * TILE_SIZE),
             y = (math.random(2, self.height - 1) * TILE_SIZE),
 
-            --[[x = math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
-                VIRTUAL_WIDTH - TILE_SIZE * 2 - 16),
-            y = math.random(MAP_RENDER_OFFSET_Y + TILE_SIZE,
-                VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16),
-            ]]
             width = 16,
             height = 16,
 
@@ -203,7 +198,7 @@ function Room:generateWallsAndFloors()
 end
 
 function Room:generateParticleSystems()
-    self.psystems['hit-entity'] = ParticleEffect('hit-entity')
+    self.psystems['hit-entity'] = ParticleEffect(PARTICLE_EFFECT_DEFS['hit-entity'])
 
     -- nb. obj. break particles are spawned 
 end
@@ -336,8 +331,20 @@ function Room:render()
         doorway:render(self.adjacentOffsetX, self.adjacentOffsetY)
     end
 
+    -- store reference to carried objects to render on top of static objects
+    local carried = nil
+
     for k, object in pairs(self.objects) do
-        object:render(self.adjacentOffsetX, self.adjacentOffsetY)
+        if object.carrier == nil then
+            object:render(self.adjacentOffsetX, self.adjacentOffsetY)
+        else
+            carried = object
+        end
+    end
+
+    -- if there is a carried object, render it
+    if carried then
+        carried:render(self.adjacentOffsetX, self.adjacentOffsetY)
     end
 
     for k, entity in pairs(self.entities) do
