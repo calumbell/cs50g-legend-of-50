@@ -27,7 +27,7 @@ PLAYER_WALK_SPEED = 60
 
 -- reciprocal of this number is the probability
 HEART_SPAWN_CHANCE = 3
-POT_SPAWN_CHANCE = 3
+POT_SPAWN_CHANCE = 6
 
 --
 -- projectile constants

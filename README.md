@@ -1,32 +1,33 @@
 # Legend of 50
 
-Assignment 5 of EDX/HarvardX's *CS50 Introduction to Games Development* course was to develop features for **Legend of 50**, a game heavily inspired by the SNES Legend of Zelda titles. The game uses the LÖVE 2D game engine (version 10.2) and was programmed in Lua.
+Project 5 of [CS50's Introduction to Games Development](https://cs50.harvard.edu/games/2018/)
 
-### Requirements
-- LÖVE 2D 0.10.2 [Super Toast] *https://github.com/love2d/love/releases/tag/0.10.2*
+*Legend of 50* is a game heavily inspired by the SNES Legend of Zelda titles and implemented in the [LÖVE2D](https://love2d.org/) framework. For this project, I added several new features to the distribution code; breakable pots, a projectile system, and pickups/powerups.
 
-### Topics
- Some of the topics that we explored over the course of this exercise were:
-- Games in top-down perspective
-- Generative level design
-- Hit/hurtboxes
-- Events
-- Screen scrolling 
-- Data-driven Design
+[Full project specification](https://cs50.harvard.edu/games/2018/projects/5/zelda/).
 
-### Assessment Criteria
-- Implement hearts that sometimes drop from vanquished enemies at random, which will heal the player for a full heart when picked up.
-- Add pots to the game world at random that the player can pick up, at which point their animation will change to reflect them carrying the pot. The player should not be able to swing their sword when in this state.
-- When carrying a pot, the player should be able to throw the pot. When thrown, the pot will travel in a straight line based on where the player is looking. When it collides with a wall, travels more than four tiles, or collides with an enemy, it should disappear. When it collides with an enemy, it should do 1 point of damage to that enemy as well.
+## Setup
+First, clone this repository:
+```bash
+git clone https://github.com/calumbell/cs50g-legend-of-50
+```
+Install **LÖVE2D** (v10.2) - [click here for installation instructions](https://love2d.org/wiki/Getting_Started)
+
+To run the game:
+```bash
+cd legend-of-50
+love .
+```
+
+## Visuals
+You can see a video demonstration of this project [here](https://youtu.be/nb676X_qNw8).
+
+<img src="graphics/screenshots/ss-legend-of-50-title.png" width=400>
+<img src="graphics/screenshots/ss-legend-of-50-attack.png" width=400>
+<img src="graphics/screenshots/ss-legend-of-50-pot.png" width=400>
 
 
+## Requirements
+*Legend of 50* was built using the [LÖVE2D](https://love2d.org/) framework (version 10.2)
 
-### Links
-Learn more about CS50g:
-*https://www.edx.org/course/cs50s-introduction-to-game-development*
-
-Learn more about LÖVE:
-*https://love2d.org/*
-
-The distribution code for this assignment can be found here: 
-*cdn.cs50.net/games/2019/x/assignments/5/assignment5.zip*
+[Push](https://github.com/Ulydev/push) was used for resolution-handling, [hump](https://github.com/vrld/hump/blob/master/class.lua) was used for Lua object-orientation, and [Knife](https://github.com/airstruck/knife) was used to handle asynchronous code, chained functions, tweening, etc.
